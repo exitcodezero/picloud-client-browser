@@ -1,0 +1,24 @@
+{
+  "name": "PiCloud-Client",
+  "homepage": "https://github.com/projectweekend/picloud-client-browser",
+  "authors": [
+    "Brian Hines <brian@projectweekend.net>"
+  ],
+  "description": "A browser client for PiCloud",
+  "main": "picloud.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "raspberry pi",
+    "websocket"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
