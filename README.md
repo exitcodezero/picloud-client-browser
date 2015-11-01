@@ -21,7 +21,7 @@ function subscriptionCallback(message) {
 picloud.subscribe('hi', subscriptionCallback);
 ```
 
- The `data` object received by the event callback function will have the following keys:
+ The `message` object received by the event callback function will have the following keys:
  * `action` - value will be a string
  * `event` - value will be a string
  * `data` - value will be a string
