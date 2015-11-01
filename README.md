@@ -27,7 +27,7 @@ picloud.subscribe('hi', subscriptionCallback);
  * `data` - value will be a string
  * `created_at` - value will be a datetime string
 
- Publish data for an event name:
- ```javascript
- picloud.subscribe('whatever', 'howdy!');
- ```
+Publish data for an event name:
+```javascript
+picloud.subscribe('whatever', 'howdy!');
+```
