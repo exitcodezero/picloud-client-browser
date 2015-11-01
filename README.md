@@ -29,5 +29,5 @@ picloud.subscribe('hi', subscriptionCallback);
 
 Publish data for an event name:
 ```javascript
-picloud.subscribe('whatever', 'howdy!');
+picloud.publish('whatever', 'howdy!');
 ```
