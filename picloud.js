@@ -1,16 +1,19 @@
-function PiCloud(url, apiKey) {
+function PiCloud(url, apiKey, clientName) {
     if (typeof url !== "string") {
         throw new Error("'url' must be a string");
     }
     if (typeof apiKey !== "string") {
         throw new Error("'apiKey' must be a string");
     }
+    if (typeof clientName !== "string") {
+        throw new Error("'clientName' must be a string");
+    }
 
     var _this = this;
 
     _this._subscriptions = {};
 
-    var socketUrl = url + "?apiKey=" + apiKey;
+    var socketUrl = url + "?apiKey=" + apiKey + "&clientName=" + clientName;
     var socket = new WebSocket(socketUrl);
     socket.onmessage = function (message) {
         var data = JSON.parse(message.data);
