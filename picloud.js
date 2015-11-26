@@ -24,6 +24,16 @@ function PiCloud(url, apiKey, clientName) {
     _this._socket = socket;
 }
 
+PiCloud.prototype.onReady = function (cb) {
+    if (this._socket.readyState === WebSocket.OPEN) {
+        cb();
+    } else {
+        this._socket.onopen = function () {
+            cb();
+        };
+    }
+};
+
 PiCloud.prototype.publish = function (e, data) {
     if (typeof e !== "string") {
         throw new Error("'e' must be a string");
