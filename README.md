@@ -6,9 +6,9 @@ bower install picloud-client
 
 ## Usage
 
-Creating a new client requires a websocket URL and an API key:
+Creating a new client requires a websocket URL, an API key, and a client name:
 ```javascript
-var picloud = new PiCloud('wss://example.com/ws', 'secretapikey');
+var picloud = new PiCloud('wss://example.com/ws', 'secretapikey', 'My-PiCloud-Thing');
 ```
 
 Connecting can take a second or two, you'll need to wrap any additional code in the `onReady` method to make sure you're connected first:
