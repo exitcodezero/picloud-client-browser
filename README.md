@@ -8,12 +8,12 @@ bower install picloud-client
 
 Creating a new client requires a websocket URL, an API key, and a client name:
 ```javascript
-var picloud = new PiCloud('wss://example.com/ws', 'secretapikey', 'My-PiCloud-Thing');
+var subClient = new SubClient('wss://example.com/ws', 'secretapikey', 'My-PiCloud-Thing');
 ```
 
 Connecting can take a second or two, you'll need to wrap any additional code in the `onReady` method to make sure you're connected first:
 ```javascript
-picloud.onReady(function () {
+subClient.onReady(function () {
    // subscription or publishing stuff
 });
 ```
@@ -25,7 +25,7 @@ function subscriptionCallback(message) {
     console.log(message);
 }
 
-picloud.subscribe('hi', subscriptionCallback);
+subClient.subscribe('hi', subscriptionCallback);
 ```
 
  The `message` object received by the event callback function will have the following keys:
@@ -35,6 +35,5 @@ picloud.subscribe('hi', subscriptionCallback);
  * `created_at` - value will be a datetime string
 
 Publish data for an event name:
-```javascript
-picloud.publish('whatever', 'howdy!');
-```
+
+Publish functionality is currently being revisited and will be available again soon.
