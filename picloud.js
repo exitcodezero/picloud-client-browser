@@ -1,4 +1,4 @@
-function PiCloud(url, apiKey, clientName) {
+function SubClient(url, apiKey, clientName) {
     if (typeof url !== "string") {
         throw new Error("'url' must be a string");
     }
@@ -24,7 +24,7 @@ function PiCloud(url, apiKey, clientName) {
     _this._socket = socket;
 }
 
-PiCloud.prototype.onReady = function (cb) {
+SubClient.prototype.onReady = function (cb) {
     if (this._socket.readyState === WebSocket.OPEN) {
         cb();
     } else {
@@ -34,22 +34,7 @@ PiCloud.prototype.onReady = function (cb) {
     }
 };
 
-PiCloud.prototype.publish = function (e, data) {
-    if (typeof e !== "string") {
-        throw new Error("'e' must be a string");
-    }
-    if (typeof data !== "string") {
-        throw new Error("'data' must be a string");
-    }
-    var message = {
-        "action": "publish",
-        "event": e,
-        "data": data
-    };
-    this._socket.send(JSON.stringify(message));
-};
-
-PiCloud.prototype.subscribe = function (e, cb) {
+SubClient.prototype.subscribe = function (e, cb) {
     if (typeof e !== "string") {
         throw new Error("'e' must be a string");
     }
