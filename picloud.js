@@ -1,4 +1,4 @@
-function SubClient(url, apiKey, clientName) {
+function PiCloudSocketClient(url, apiKey, clientName) {
     if (typeof url !== "string") {
         throw new Error("'url' must be a string");
     }
@@ -13,28 +13,42 @@ function SubClient(url, apiKey, clientName) {
 
     _this._subscriptions = {};
 
-    var socketUrl = url + "?apiKey=" + apiKey + "&clientName=" + clientName;
-    var socket = new WebSocket(socketUrl);
-    socket.onmessage = function (message) {
+    var subUrl = url + "/subscribe?apiKey=" + apiKey + "&clientName=" + clientName;
+    var subSocket = new WebSocket(subUrl);
+    subSocket.onmessage = function (message) {
         var data = JSON.parse(message.data);
         _this._subscriptions[data.event].forEach(function (subscriptionCallback) {
             subscriptionCallback(data);
         });
     };
-    _this._socket = socket;
+    _this._subSocket = subSocket;
+
+    var pubUrl = url + "/publish?apiKey=" + apiKey + "&clientName=" + clientName;
+    var pubSocket = new WebSocket(pubUrl);
+    _this._pubSocket = pubSocket;
 }
 
-SubClient.prototype.onReady = function (cb) {
-    if (this._socket.readyState === WebSocket.OPEN) {
+PiCloudSocketClient.prototype.pubReady = function (cb) {
+    if (this._pubSocket.readyState === WebSocket.OPEN) {
         cb();
     } else {
-        this._socket.onopen = function () {
+        this._pubSocket.onopen = function () {
             cb();
         };
     }
 };
 
-SubClient.prototype.subscribe = function (e, cb) {
+PiCloudSocketClient.prototype.subReady = function (cb) {
+    if (this._subSocket.readyState === WebSocket.OPEN) {
+        cb();
+    } else {
+        this._subSocket.onopen = function () {
+            cb();
+        };
+    }
+};
+
+PiCloudSocketClient.prototype.subscribe = function (e, cb) {
     if (typeof e !== "string") {
         throw new Error("'e' must be a string");
     }
@@ -50,5 +64,20 @@ SubClient.prototype.subscribe = function (e, cb) {
         "action": "subscribe",
         "event": e
     });
-    this._socket.send(jsonMessage);
+    this._subSocket.send(jsonMessage);
+};
+
+PiCloudSocketClient.prototype.publish = function (e, data) {
+    if (typeof e !== "string") {
+        throw new Error("'e' must be a string");
+    }
+    if (typeof data !== "string") {
+        throw new Error("'data' must be a string");
+    }
+    var message = {
+        "action": "publish",
+        "event": e,
+        "data": data
+    };
+    this._pubSocket.send(JSON.stringify(message));
 };
